@@ -1,0 +1,38 @@
+<div *ngIf="error">{{error.errorMsg}}</div>
+<div *ngIf="!users || (users && users.length == 0)"
+style="margin-bottom:10px">
+  Список не загружен или пуст
+</div>
+<div *ngIf="!users || (users && users.length == 0)">
+  <p-button
+    [styleClass]="'ui-button-info'"
+    label="Загрузить пользователей"
+    (onClick)="getUsers()">
+  </p-button>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <ng-template ngFor let-user [ngForOf]="users" let-i="index" [ngForTrackBy]="trackByFn">
+    <p-card  
+    [style]="{width: '360px', 'margin-right': '10px', 'margin-bottom': '10px'}" 
+    styleClass="ui-card-shadow user-item">
+      <p-header>
+        <a href="https://vk.com/id{{user.id}}" target="blank">
+          <img src="Card" src="{{user.photo_200_orig}}">
+        </a>        
+      </p-header>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+          <a href="https://vk.com/id{{user.id}}" target="blank">{{user.first_name}} {{user.last_name}}</a>   
+          <div style="align-self: flex-end">
+            <p-button
+              [styleClass]="user.review == 0 ? 'ui-button-info' : 'ui-button-success'"
+              [label]="user.review == 0 ? 'review' : 'reviewed'"
+              [disabled]="user.review == 1"
+              (onClick)="markUser(user.id, i)">
+            </p-button>               
+            <p-button label="save" (onClick)="saveChanges()"></p-button>
+          </div>
+      </div>
+    </p-card>
+  </ng-template>
+</div>
+
