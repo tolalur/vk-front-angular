@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ShowUsersComponent implements OnInit {
   
+  loadUsersUrl = '/api/get/users/';
   usersUrl = '/api/users/';
   usersReviewUrl = '/api/save/users/';
   users: User[];
@@ -27,6 +28,18 @@ export class ShowUsersComponent implements OnInit {
 
   ngOnInit() {    
   }
+  
+  loadUsers() {
+    return this.http.get<any>(this.loadUsersUrl).subscribe(
+      data => {        
+        console.log('udatasers', data);
+      },
+      err => {
+        this.error = err.error;
+      }
+    );
+  }
+
 
   getUsers() {
     return this.http.get<any>(this.usersUrl).subscribe(
